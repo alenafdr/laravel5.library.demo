@@ -97,26 +97,26 @@ Route:
 # Screenshot
 
 Журнал выдачи
-[[https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_1.png|alt=octocat]]
+![](https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_1.png)
 
 Читатели
-[[https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_2.png|alt=octocat]]
+![](https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_2.png)
 
 Просмотр читателя
-[[https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_3.png|alt=octocat]]
+![](https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_3.png)
 
 Книги
-[[https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_4.png|alt=octocat]]
+![](https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_4.png)
 
 Просмотр книги
-[[https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_5.png|alt=octocat]]
+![](https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_5.png)
 
 Экземпляры книг
-[[https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_6.png|alt=octocat]]
+![](https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_6.png)
 
 Просмотр экземпляра книги
-[[https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_7.png|alt=octocat]]
+![](https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_7.png)
 
 Пример REST API
-[[https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_8.png|alt=octocat]]
+![](https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_8.png)
 
