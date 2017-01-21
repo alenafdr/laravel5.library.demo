@@ -23,7 +23,7 @@ class CreateBooksInHandsTable extends Migration
             $table->timestamps();
             
             // index
-            $table->unique(['book_unit_id', 'user_id']);
+            $table->unique(['book_unit_id', 'return_at']);
             $table->foreign('book_unit_id')->references('id')->on('book_units')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

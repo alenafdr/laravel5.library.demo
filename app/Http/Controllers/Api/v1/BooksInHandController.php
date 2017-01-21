@@ -6,25 +6,29 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Validator;
 
-use App\Models\BookUnit as Model;
+use App\Models\BooksInHand as Model;
 
-class BookUnitController extends \App\Http\Controllers\Controller
+class BooksInHandController extends \App\Http\Controllers\Controller
 {
   
   /**
    * Правила проверки для "store"
    */
   protected $store_validate = [
-    'barcode' => 'required|string',
-    'book_id' => 'required|integer'
+    'book_unit_id' => 'required|integer',
+    'user_id'      => 'required|integer',
+    'take_at'      => 'required|string',
+    'return_at'    => 'string|nullable'
   ];
   
   /**
    * Правила проверки для "update"
    */
   protected $update_validate = [
-    'barcode' => 'string',
-    'book_id' => 'integer'
+    'book_unit_id' => 'integer',
+    'user_id'      => 'integer',
+    'take_at'      => 'string',
+    'return_at'    => 'string'
   ];
   
   /**
@@ -57,7 +61,10 @@ class BookUnitController extends \App\Http\Controllers\Controller
     try {
       $items = Model::all();
       foreach($items as $item) {
-        $item->book; // Для $item дозаполняем связи
+        // Для $item дозаполняем связи
+        $item->user;
+        $item->bookUnit;
+        $item->bookUnit->book;
       }
       return $this->send_ok($items);
     } catch (\Exception $e){
@@ -75,7 +82,10 @@ class BookUnitController extends \App\Http\Controllers\Controller
 	{
     try {
       $item = Model::findOrFail($id);
-      $item->book; // Для $item дозаполняем связи
+      // Для $item дозаполняем связи
+      $item->user;
+      $item->bookUnit;
+      $item->bookUnit->book;
       return $this->send_ok($item);
     } catch (\Exception $e) {
       return $this->send_error($e->getMessage());
@@ -88,20 +98,15 @@ class BookUnitController extends \App\Http\Controllers\Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-     
-    /**
-   * Store a newly created resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @return \Illuminate\Http\Response
-   */
-     
   public function store(Request $request)
   {
     try {
       $this->validate($request, $this->store_validate);
       $item = Model::create($request->all());
-      $item->book; // Для $item дозаполняем связи
+      // Для $item дозаполняем связи
+      $item->user;
+      $item->bookUnit;
+      $item->bookUnit->book;
       return $this->send_ok($item);
     } catch (\Exception $e) {
       return $this->send_error($e->getMessage());
@@ -121,7 +126,10 @@ class BookUnitController extends \App\Http\Controllers\Controller
       $this->validate($request, $this->update_validate);
       $item = Model::findOrFail($id);
       $item->update($request->all());
-      $item->book; // Для $item дозаполняем связи
+      // Для $item дозаполняем связи
+      $item->user;
+      $item->bookUnit;
+      $item->bookUnit->book;
       return $this->send_ok($item);
     } catch (\Exception $e) {
       return $this->send_error($e->getMessage());

@@ -6,10 +6,47 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Validator;
 
-use App\Models\Book;
+use App\Models\Book as Model;
 
 class BookController extends \App\Http\Controllers\Controller
 {
+  /**
+   * Правила проверки для "store"
+   */
+  protected $store_validate = [
+    'name'        => 'required|string',
+    'autor'       => 'required|string',
+    'description' => 'required|string'
+  ];
+  
+  /**
+   * Правила проверки для "update"
+   */
+  protected $update_validate = [
+    'name'        => 'string',
+    'autor'       => 'string',
+    'description' => 'string'
+  ];
+  
+  /**
+   * Отправка "хорошего" JSON ответа
+   */
+  protected function send_ok($data) {
+    return response()->json([
+      'success' => true,
+      'data'    => $data
+    ], 200);
+  }
+  
+  /**
+   * Отправка "плохого" JSON ответа
+   */
+  protected function send_error($message) {
+    return response()->json([
+      'success' => true,
+      'error'   => $message
+    ], 400);
+  }
   
   /**
    * Display a listing of the resource.
@@ -19,36 +56,9 @@ class BookController extends \App\Http\Controllers\Controller
   public function index()
 	{
     try {
-      
-      $statusCode = 200;
-      $response = [
-        'success' => true,
-        'data'  => []
-      ];
-
-      $items = Book::all();
-
-      foreach($items as $item) {
-        
-        $response['data'][] = [
-          'id'          => (int) $item->id,
-          'name'        => $item->name,
-          'autor'       => $item->autor,
-          'description' => $item->description,
-        ];
-      }
-    
+      return $this->send_ok(Model::all());
     } catch (\Exception $e){
-      $statusCode = 500;
-      $response = [
-        'success' => false,
-        'error'  => [
-          'code' => $e->getCode(),
-          'message' => $e->getMessage()
-        ]
-      ];
-    } finally {
-      return response()->json($response, $statusCode);
+      return $this->send_error($e->getMessage());
     }
 	}
   
@@ -61,32 +71,9 @@ class BookController extends \App\Http\Controllers\Controller
   public function show($id) 
 	{
     try {
-      $statusCode = 200;
-      $response = [
-        'success' => true,
-        'data'  => []
-      ];
-      
-      $item = Book::findOrFail($id);
-      $statusCode = 200;
-      $response['data'] = [
-        'id'          => (int) $item->id,
-        'name'        => $item->name,
-        'autor'       => $item->autor,
-        'description' => $item->description,
-      ];
-      
+      return $this->send_ok(Model::findOrFail($id));
     } catch (\Exception $e) {
-      $statusCode = 400;
-      $response = [
-        'success' => false,
-        'error'  => [
-          'code' => $e->getCode(),
-          'message' => $e->getMessage()
-        ]
-      ];
-    } finally {
-      return response()->json($response, $statusCode);
+      return $this->send_error($e->getMessage());
     }
 	}
   
@@ -100,28 +87,10 @@ class BookController extends \App\Http\Controllers\Controller
   public function store(Request $request)
   {
     try {
-      $statusCode = 200;
-      $response = ['success' => true];
-
-      $this->validate($request, [
-        'name' => 'required|string',
-        'autor' => 'required|string',
-        'description' => 'required|string'
-      ]);
-
-      $response['data'] = Book::create($request->all())->id;
-      
+      $this->validate($request, $this->store_validate);
+      return $this->send_ok(Model::create($request->all()));
     } catch (\Exception $e) {
-      $statusCode = 400;
-      $response = [
-        'success' => false,
-        'error'  => [
-          'code' => $e->getCode(),
-          'message' => $e->getMessage()
-        ]
-      ];
-    } finally {
-      return response()->json($response, $statusCode);
+      return $this->send_error($e->getMessage());
     }
   }
   
@@ -135,28 +104,12 @@ class BookController extends \App\Http\Controllers\Controller
   public function update(Request $request, $id)
   {
     try {
-      $statusCode = 200;
-      $response = ['success' => true, 'data'=>$id];
-
-      $this->validate($request, [
-        'name' => 'string',
-        'autor' => 'string',
-        'description' => 'string'
-      ]);
-
-      Book::findOrFail($id)->update($request->all());
-      
+      $this->validate($request, $this->update_validate);
+      $item = Model::findOrFail($id);
+      $item->update($request->all());
+      return $this->send_ok($item);
     } catch (\Exception $e) {
-      $statusCode = 400;
-      $response = [
-        'success' => false,
-        'error'  => [
-          'code' => $e->getCode(),
-          'message' => $e->getMessage()
-        ]
-      ];
-    } finally {
-      return response()->json($response, $statusCode);
+      return $this->send_error($e->getMessage());
     }
   }
     
@@ -169,20 +122,10 @@ class BookController extends \App\Http\Controllers\Controller
   public function destroy($id)
   {
     try {
-      $statusCode = 200;
-      $response = ['success' => true, 'data'=>$id];
-      Book::findOrFail($id)->delete();
+      Model::findOrFail($id)->delete();
+      return $this->send_ok($id);
     } catch (\Exception $e) {
-      $statusCode = 400;
-      $response = [
-        'success' => false,
-        'error'  => [
-          'code' => $e->getCode(),
-          'message' => $e->getMessage()
-        ]
-      ];
-    } finally {
-      return response()->json($response, $statusCode);
+      return $this->send_error($e->getMessage());
     }
   }
   
