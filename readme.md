@@ -93,3 +93,30 @@ Route:
 ### Реализованы необходимые юнит тесты
 
 - ApiV1BooksInHandControllerTest.php
+
+# Screenshot
+
+Журнал выдачи
+[[https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_1.png|alt=octocat]]
+
+Читатели
+[[https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_2.png|alt=octocat]]
+
+Просмотр читателя
+[[https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_3.png|alt=octocat]]
+
+Книги
+[[https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_4.png|alt=octocat]]
+
+Просмотр книги
+[[https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_5.png|alt=octocat]]
+
+Экземпляры книг
+[[https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_6.png|alt=octocat]]
+
+Просмотр экземпляра книги
+[[https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_7.png|alt=octocat]]
+
+Пример REST API
+[[https://github.com/dnech/laravel5.library.demo/blob/master/screenshot/Screenshot_8.png|alt=octocat]]
+
