@@ -106,7 +106,7 @@ class UserController extends \App\Http\Controllers\Controller
         'email' => 'required|string'
       ]);
 
-      User::create($request->all());
+      $response['data'] = User::create($request->all())->id;
       
     } catch (\Exception $e) {
       $statusCode = 400;
@@ -133,7 +133,7 @@ class UserController extends \App\Http\Controllers\Controller
   {
     try {
       $statusCode = 200;
-      $response = ['success' => true];
+      $response = ['success' => true, 'data'=>$id];
 
       $this->validate($request, [
         'name' => 'string',
@@ -166,7 +166,7 @@ class UserController extends \App\Http\Controllers\Controller
   {
     try {
       $statusCode = 200;
-      $response = ['success' => true];
+      $response = ['success' => true, 'data'=>$id];
       User::findOrFail($id)->delete();
     } catch (\Exception $e) {
       $statusCode = 400;

@@ -7,8 +7,9 @@ use Illuminate\Http\Response;
 use Illuminate\Validation\Validator;
 
 use App\Models\Book;
+use App\Models\BookUnit;
 
-class BookController extends \App\Http\Controllers\Controller
+class BookUnitController extends \App\Http\Controllers\Controller
 {
   
   /**
@@ -26,15 +27,22 @@ class BookController extends \App\Http\Controllers\Controller
         'data'  => []
       ];
 
-      $items = Book::all();
+      $items = BookUnit::all();
 
       foreach($items as $item) {
         
+        $book = $item->book;
+        
         $response['data'][] = [
           'id'          => (int) $item->id,
-          'name'        => $item->name,
-          'autor'       => $item->autor,
-          'description' => $item->description,
+          'book_id'     => $item->book_id,
+          'barcode'     => $item->barcode,
+          'book'        => [
+            'id'          => (int) $book->id,
+            'name'        => $book->name,
+            'autor'       => $book->autor,
+            'description' => $book->description,
+          ]
         ];
       }
     
@@ -67,13 +75,21 @@ class BookController extends \App\Http\Controllers\Controller
         'data'  => []
       ];
       
-      $item = Book::findOrFail($id);
+      $item = BookUnit::findOrFail($id);
       $statusCode = 200;
+      
+      $book = $item->book;
+      
       $response['data'] = [
         'id'          => (int) $item->id,
-        'name'        => $item->name,
-        'autor'       => $item->autor,
-        'description' => $item->description,
+        'book_id'     => $item->book_id,
+        'barcode'     => $item->barcode,
+        'book'        => [
+          'id'          => (int) $book->id,
+          'name'        => $book->name,
+          'autor'       => $book->autor,
+          'description' => $book->description,
+        ]
       ];
       
     } catch (\Exception $e) {
@@ -104,12 +120,11 @@ class BookController extends \App\Http\Controllers\Controller
       $response = ['success' => true];
 
       $this->validate($request, [
-        'name' => 'required|string',
-        'autor' => 'required|string',
-        'description' => 'required|string'
+        'barcode' => 'required|string',
+        'book_id' => 'required|integer'
       ]);
 
-      $response['data'] = Book::create($request->all())->id;
+      $response['data'] = BookUnit::create($request->all())->id;
       
     } catch (\Exception $e) {
       $statusCode = 400;
@@ -139,12 +154,11 @@ class BookController extends \App\Http\Controllers\Controller
       $response = ['success' => true, 'data'=>$id];
 
       $this->validate($request, [
-        'name' => 'string',
-        'autor' => 'string',
-        'description' => 'string'
+        'barcode' => 'string',
+        'book_id' => 'integer'
       ]);
 
-      Book::findOrFail($id)->update($request->all());
+      BookUnit::findOrFail($id)->update($request->all());
       
     } catch (\Exception $e) {
       $statusCode = 400;
@@ -171,7 +185,7 @@ class BookController extends \App\Http\Controllers\Controller
     try {
       $statusCode = 200;
       $response = ['success' => true, 'data'=>$id];
-      Book::findOrFail($id)->delete();
+      BookUnit::findOrFail($id)->delete();
     } catch (\Exception $e) {
       $statusCode = 400;
       $response = [
