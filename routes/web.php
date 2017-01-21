@@ -36,5 +36,6 @@ Route::group(['middleware' => 'csrf'], function($router)
 // API
 Route::group(array('prefix' => 'api/v1'), function()
 {
+  Route::resource('users', 'Api\v1\UserController');
   Route::resource('books', 'Api\v1\BookController');
 });

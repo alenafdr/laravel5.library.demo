@@ -64,3 +64,27 @@ php artisan migrate
 
 Для загрузки тестовых данных выполнить:
 php artisan db:seed
+
+### Контроллеры
+
+Для каждой модели реализованы CRUD контроллеры, обеспечивающие все базовые действия c моделью.
+Для модели "BooksInHand" дополнительно реализован функционал установки отметки о возврате книги.
+
+Route:
+- /user - User
+- /book - Book
+- /book-unit - BookUnit
+- /books-in-hand - BooksInHand
+
+### API Контроллеры
+
+Для каждой модели реализованы REST API контроллеры, обеспечивающие все базовые действия c моделью.
+
+Route:
+- /api/v1/users - User
+- /api/v1/books - Book
+- /api/v1/book-units - BookUnit
+- /api/v1/books-in-hands - BooksInHand
+
+
+
