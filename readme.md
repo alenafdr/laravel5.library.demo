@@ -1,27 +1,62 @@
-# Laravel PHP Framework
+# Демонстрационное приложение "Библиотека" на фреймворке Laravel5
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+## Задание
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+Необходимо реализовать на Laravel/Symfony приложение, которое представляет собой библиотеку, где есть пользователи (User) и книги (Book).
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+Список действий, которые должны быть доступны при помощи REST API:
 
-## Official Documentation
+- добавление новой книги в библиотеку
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+- отметка, о взятии книги пользователем (TEST)
 
-## Contributing
+- список книг, взятых пользователем
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+- статистика самых читающих пользователей (TEST)
 
-## Security Vulnerabilities
+Отмеченные знаком “(TEST)” действия необходимо покрыть при помощи тестов. Оформить в виде git репозитория, продемонстрировав историю разработки.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+## Реализация
 
-## License
+### Тезисы
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+Так как нет четкого технического задания, можем принять следующие принципы создаваемого приложения:
+
+- В приложении должны быть пользователи (User) и книги (Book).
+
+- Так как в классическом приложении под пользователями понимаются операторы работающие в приложении,
+а в нашем случае под пользователями понимаются Читатели, то модель User будем воспринимать как "Читатели"
+- Для упрощения примера, операторов в системе не будет и авторизация отсутствует.
+
+- Так как в библиотеке может быть несколько экземпляров одной книги, принято решение описание книги хранить в модели "Book".
+И реализовать модель "BookUnit" для описания экземпляров книг. Вся дальнейшая работа по выдаче книг и их возврату идет с моделью "BookUnit"
+
+- Журналирование выдачи книги можно производить в модели "BookUnit" через поля: (bool) "на руках", (User) "у читателя", (timestamp) "когда выдано".
+Но так как в ТЗ указана возможность получения статистики самых читающих пользователей, то принято решение вести историю взятия книг на руки через модель "BooksInHand".
+
+### Сущьности БД
+
+Book - книги
+- name: Наименование книги
+- autor: Автор книги
+- description: Описание книги
+
+BookUnit - Экземпляры книг
+- book_id: Ссылка на книгу
+- barcode: Штрих код
+
+BooksInHand - Журнал выдачи экземпляров книг
+- book_unit_id: Ссылка на Экземпляр книги
+- user_id: Ссылка на Читателя
+- take_at: Временная метка выдачи книги
+- return_at: Временная метка возврата книги
+
+User - Читатели
+- name: ФИО
+- email: Эл.адрес
+- password: Пароль (не используется)
+
+
+
+
+
