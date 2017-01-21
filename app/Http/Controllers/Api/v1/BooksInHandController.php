@@ -46,7 +46,7 @@ class BooksInHandController extends \App\Http\Controllers\Controller
    */
   protected function send_error($message) {
     return response()->json([
-      'success' => true,
+      'success' => false,
       'error'   => $message
     ], 400);
   }
@@ -160,9 +160,9 @@ class BooksInHandController extends \App\Http\Controllers\Controller
   public function statistics()
   {
     try {
-      $items = Model::select('user_id', \DB::raw('count(*) as total'))
+      $items = Model::select('user_id', \DB::raw('count(*) as count'))
                  ->groupBy('user_id')
-                 ->orderBy('total','desc')
+                 ->orderBy('count','desc')
                  ->get();
       
       // Для дозаполняем связи

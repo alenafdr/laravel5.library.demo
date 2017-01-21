@@ -43,7 +43,7 @@ class BookController extends \App\Http\Controllers\Controller
    */
   protected function send_error($message) {
     return response()->json([
-      'success' => true,
+      'success' => false,
       'error'   => $message
     ], 400);
   }

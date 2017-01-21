@@ -86,5 +86,10 @@ Route:
 - /api/v1/book-units - BookUnit
 - /api/v1/books-in-hands - BooksInHand
 
+Для API контроллера BooksInHand добавлены два экшена
+- Api\v1\BooksInHandController@inHand '/api/v1/books-in-hands/in-hand/{id}' : список книг, взятых пользователем 
+- Api\v1\BooksInHandController@statistics '/api/v1/books-in-hands/statistics' : статистика самых читающих пользователей
 
+### Реализованы необходимые юнит тесты
 
+- ApiV1BooksInHandControllerTest.php
