@@ -41,7 +41,13 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Дата возврата:</strong>
-                {{ $item->return_at }}
+                @if ($item->return_at === '2000-01-01 00:00:00')
+                  {!! Form::open(['method' => 'PUT','route' => ['books-in-hand.return', $item->id],'style'=>'display:inline']) !!}
+                  {!! Form::submit('Вернуть', ['class' => 'btn btn-success']) !!}
+                  {!! Form::close() !!}
+                @else
+                  {{ $item->return_at }}
+                @endif 
             </div>
         </div>
         

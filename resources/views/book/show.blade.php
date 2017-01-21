@@ -56,6 +56,8 @@
           > Выдан пользователю <a href="{{ route('user.show', $unit->hands->first()->user->id) }}">{{ $unit->hands->first()->user->name }}</a> с {{ $unit->hands->first()->take_at }}
         @elseif (count($unit->hands) > 1)
           > Более одной записи выдачи одного экземпляра книги!
+        @else
+          > В библиотеке
         @endif
       </li>
       @endforeach

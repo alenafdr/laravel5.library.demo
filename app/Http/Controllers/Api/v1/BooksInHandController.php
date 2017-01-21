@@ -17,7 +17,7 @@ class BooksInHandController extends \App\Http\Controllers\Controller
   protected $store_validate = [
     'book_unit_id' => 'required|integer',
     'user_id'      => 'required|integer',
-    'take_at'      => 'required|string',
+    'take_at'      => 'string|nullable',
     'return_at'    => 'string|nullable'
   ];
   
@@ -27,8 +27,8 @@ class BooksInHandController extends \App\Http\Controllers\Controller
   protected $update_validate = [
     'book_unit_id' => 'integer',
     'user_id'      => 'integer',
-    'take_at'      => 'string',
-    'return_at'    => 'string'
+    'take_at'      => 'string|nullable',
+    'return_at'    => 'string|nullable'
   ];
   
   /**
@@ -147,6 +147,55 @@ class BooksInHandController extends \App\Http\Controllers\Controller
     try {
       Model::findOrFail($id)->delete();
       return $this->send_ok($id);
+    } catch (\Exception $e) {
+      return $this->send_error($e->getMessage());
+    }
+  }
+  
+  /**
+   * Статистика по самым читающим читателям
+   *
+   * @return \Illuminate\Http\Response
+  */
+  public function statistics()
+  {
+    try {
+      $items = Model::select('user_id', \DB::raw('count(*) as total'))
+                 ->groupBy('user_id')
+                 ->orderBy('total','desc')
+                 ->get();
+      
+      // Для дозаполняем связи
+      foreach($items as $item) {
+        $item->user;
+      }
+      
+      return $this->send_ok($items);
+    } catch (\Exception $e) {
+      return $this->send_error($e->getMessage());
+    }
+  }
+  
+  /**
+   * Книги на руках
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+  */
+  public function inHand($id)
+  {
+    try {
+      
+      $items = Model::where('user_id', '=', $id)->where('return_at', '=', '2000-01-01 00:00:00')->get();
+      
+      foreach($items as $item) {
+        // Для $item дозаполняем связи
+        $item->user;
+        $item->bookUnit;
+        $item->bookUnit->book;
+      }
+      
+      return $this->send_ok($items);
     } catch (\Exception $e) {
       return $this->send_error($e->getMessage());
     }

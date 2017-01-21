@@ -43,7 +43,7 @@
   <div class="panel-body">
     <ul class="list-group">
       @foreach($item->bookInHand as $unit)
-      <li class="list-group-item">{{ $unit->bookUnit->book->autor }} "{{ $unit->bookUnit->book->name }}" (Выдана {{ $unit->take_at }})</li>
+      <li class="list-group-item"><a href="{{ route('book.show', $unit->bookUnit->book->id) }}">{{ $unit->bookUnit->book->autor }} "{{ $unit->bookUnit->book->name }}"</a> (Выдана {{ $unit->take_at }})</li>
       @endforeach
     </ul>
   </div>

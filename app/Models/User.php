@@ -34,11 +34,11 @@ class User extends Authenticatable
     
     public function bookHistory()
     {
-      return $this->hasMany('App\Models\BooksInHand')->where('return_at', '<>', NULL);
+      return $this->hasMany('App\Models\BooksInHand')->where('return_at', '<>', '2000-01-01 00:00:00');
     }
     
     public function bookInHand()
     {
-      return $this->hasMany('App\Models\BooksInHand')->where('return_at', '=', NULL);
+      return $this->hasMany('App\Models\BooksInHand')->where('return_at', '=', '2000-01-01 00:00:00');
     }
 }

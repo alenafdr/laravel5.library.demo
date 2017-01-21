@@ -14,11 +14,11 @@ class BookUnit extends Model
   
   public function history()
   {
-    return $this->hasMany('App\Models\BooksInHand')->where('return_at', '<>', NULL);
+    return $this->hasMany('App\Models\BooksInHand')->where('return_at', '<>', '2000-01-01 00:00:00');
   }
   
   public function hands() {
-    return $this->hasMany('App\Models\BooksInHand')->where('return_at', '=', NULL);
+    return $this->hasMany('App\Models\BooksInHand')->where('return_at', '=', '2000-01-01 00:00:00');
   }
   
   public function book()

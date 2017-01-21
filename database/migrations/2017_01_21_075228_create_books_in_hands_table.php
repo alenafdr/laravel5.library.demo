@@ -19,7 +19,7 @@ class CreateBooksInHandsTable extends Migration
             $table->integer('book_unit_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->timestamp('take_at')->useCurrent();
-            $table->timestamp('return_at')->nullable();
+            $table->timestamp('return_at')->nullable()->default('2000-01-01 00:00:00');
             $table->timestamps();
             
             // index
