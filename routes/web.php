@@ -23,3 +23,7 @@ Route::resource('book', 'BookController');
 
 // BookUnit
 Route::resource('book-unit', 'BookUnitController');
+
+// BooksInHand
+Route::put('books-in-hand/return/{id}', [ 'as' => 'books-in-hand.return', 'uses' => 'BooksInHandController@bookreturn']);
+Route::resource('books-in-hand', 'BooksInHandController');
