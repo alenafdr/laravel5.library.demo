@@ -15,15 +15,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// User
-Route::resource('user', 'UserController');
+Route::group(['middleware' => 'csrf'], function($router)
+{
+  
+  // User
+  Route::resource('user', 'UserController');
 
-// Book
-Route::resource('book', 'BookController');
+  // Book
+  Route::resource('book', 'BookController');
 
-// BookUnit
-Route::resource('book-unit', 'BookUnitController');
+  // BookUnit
+  Route::resource('book-unit', 'BookUnitController');
 
-// BooksInHand
-Route::put('books-in-hand/return/{id}', [ 'as' => 'books-in-hand.return', 'uses' => 'BooksInHandController@bookreturn']);
-Route::resource('books-in-hand', 'BooksInHandController');
+  // BooksInHand
+  Route::put('books-in-hand/return/{id}', [ 'as' => 'books-in-hand.return', 'uses' => 'BooksInHandController@bookreturn']);
+  Route::resource('books-in-hand', 'BooksInHandController');
+  
+});
+
+// API
+Route::group(array('prefix' => 'api/v1'), function()
+{
+  Route::resource('books', 'Api\v1\BookController');
+});
