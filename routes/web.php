@@ -17,3 +17,6 @@ Route::get('/', function () {
 
 // Book
 Route::resource('book', 'BookController');
+
+// BookUnit
+Route::resource('book-unit', 'BookUnitController');
