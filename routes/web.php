@@ -11,9 +11,12 @@
 |
 */
 
-Route::get('/', 'BooksInHandController@index');
+Route::get('/', 'HomeController@index');
 
-Route::group(['middleware' => 'csrf'], function($router)
+Auth::routes();
+
+
+Route::group(['middleware' => 'auth'], function($router)
 {
   
   // User
@@ -31,15 +34,8 @@ Route::group(['middleware' => 'csrf'], function($router)
   
 });
 
-// API
-Route::group(array('prefix' => 'api/v1'), function()
-{
-  Route::resource('users',          'Api\v1\UserController');
-  Route::resource('books',          'Api\v1\BookController');
-  Route::resource('book-units',     'Api\v1\BookUnitController');
-  
-  Route::get('books-in-hands/statistics',   [ 'as' => 'books-in-hand.statistics', 'uses' => 'Api\v1\BooksInHandController@statistics']);
-  Route::get('books-in-hands/in-hand/{id}', [ 'as' => 'books-in-hand.in-hand',    'uses' => 'Api\v1\BooksInHandController@inHand']);
-  Route::resource('books-in-hands', 'Api\v1\BooksInHandController');
-  
-});
+
+
+
+
+

@@ -1,4 +1,4 @@
-@extends('app')
+@extends('layouts.app')
 
 @section('content')
 
@@ -34,6 +34,7 @@
             <th>#</th>
             <th>Имя</th>
             <th>Эл. почта</th>
+            <th>API Токен</th>
             <th style="width:320px">Действия</th>
         </tr>
     @foreach ($items as $key => $item)
@@ -41,6 +42,7 @@
         <td>{{ ++$i }}</td>
         <td>{{ $item->name }}</td>
         <td>{{ $item->email }}</td>
+        <td>{{ $item->api_token }}</td>
         <td>
             <a class="btn btn-info" href="{{ route('user.show', $item->id) }}">Просмотреть</a>
             <a class="btn btn-primary" href="{{ route('user.edit', $item->id) }}">Изменить</a>
