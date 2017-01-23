@@ -47,7 +47,7 @@
         <td>{{ $item->user->name }}</td>
         <td>{{ $item->take_at }}</td>
         <td>
-          @if ($item->return_at === '2000-01-01 00:00:00')
+          @if (is_null($item->return_at))
             {!! Form::open(['method' => 'PUT','route' => ['books-in-hand.return', $item->id],'style'=>'display:inline']) !!}
             {!! Form::submit('Вернуть', ['class' => 'btn btn-success']) !!}
             {!! Form::close() !!}

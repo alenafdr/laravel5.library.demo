@@ -1,12 +1,11 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-//use App\Models\BooksInHand;
 
 class BookUnit extends Model
 {
+  use Relations\BelongsTo\Book;
   
   protected $fillable = [
     'barcode', 'book_id'
@@ -21,8 +20,4 @@ class BookUnit extends Model
     return $this->hasMany('App\Models\BooksInHand')->where('return_at', '=', '2000-01-01 00:00:00');
   }
   
-  public function book()
-  {
-    return $this->belongsTo('App\Models\Book');
-  }
 }
